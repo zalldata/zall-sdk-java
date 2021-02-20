@@ -4,10 +4,7 @@ Java SDK 主要用于服务端 Java 应用
 
 ### 1.集成卓尔数科智能分析SDK
 
-可以用下面任意一种方式集成：
-
-- 直接从 GitHub 下载 Java SDK 的源代码，并将其作为模块添加进项目中使用；
-- 下载 z-intelligent-operation-java-sdk.jar 并添加到项目使用。
+    直接从 GitHub 下载 Java SDK 的源代码，并将其作为模块添加进项目中使用；
 
 ### 2. 初始化卓尔数科智能分析 SDK
 
