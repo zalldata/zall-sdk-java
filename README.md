@@ -44,7 +44,7 @@ public static void main(String[] args) {
 1. 后端获取前端 JavaScript SDK 生成的匿名 ID 的方式：
    可以在 Cookie 里面找到 key 为 ***zalldatajssdkcross*** 的 value 值然后进行 ***decodeURIComponent*** 解码，最后通过 ***JSON.parse*** 方法得到一个对象，对象里面的 distinct_id 的值即为所需要的 ID
    (注意，如果前端已经调用过 login 方法，那么此时 distinct_id 为登录 ID，所以需要先获取 first_id 字段的值，如果获取不到，就去获取 distinct_id 的值)。
-2. 如果 App 中嵌入了 Login 方法，需要客户端使用神策提供的获取匿名 ID 接口，将匿名 ID 传给服务端，服务端使用客户端传过来的匿名 ID 作为 Distinct ID。
+2. 如果 App 中嵌入了 Login 方法，需要客户端提供获取匿名 ID 接口，将匿名 ID 传给服务端，服务端使用客户端传过来的匿名 ID 作为 Distinct ID。
 
 所有的 ***track*** 和 ***profile*** 系列方法都必须同时指定用户 ID（***distinctId***）和用户 ID 是否为登录 ID (***isLoginId***) 这两个参数，以便明确告知智能分析用户 ID 的类型。
 
