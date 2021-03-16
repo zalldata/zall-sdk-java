@@ -323,7 +323,7 @@ public void itemSet(String itemType, String itemId, Map<String, Object> properti
 Map<String, Object> properties = new LinkedHashMap<>();
 properties.put("name", "JAVA 编程思想");
 properties.put("price", 79.20);
-sensorsAnalytics.itemSet("book", "0123456789", properties);
+zallAnalytics.itemSet("book", "0123456789", properties);
 ```
 
 
@@ -338,7 +338,7 @@ sensorsAnalytics.itemSet("book", "0123456789", properties);
 public void itemDelete(String itemType, String itemId, Map<String, Object> properties);
 
 // 例如
-sensorsAnalytics.itemDelete("book", "0123456789", null);
+zallAnalytics.itemDelete("book", "0123456789", null);
 ```
 
 
