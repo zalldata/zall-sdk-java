@@ -78,7 +78,23 @@ public class ZallDataAnalytics {
     /**
      * 记录用户注册事件
      *
-     * 这个接口是一个较为复杂的功能，请在使用前先阅读相关说明:
+     * 这个接口是一个较为复杂的功能，请在使用前先阅读相关说明
+     * 并在必要时联系我们的技术支持人员。
+     *
+     * @param loginId       登录 ID
+     * @param anonymousId   匿名 ID
+     *
+     * @throws InvalidArgumentException eventName 或 properties 不符合命名规范和类型规范时抛出该异常
+     */
+    public void trackSignUp(String loginId, String anonymousId)
+            throws InvalidArgumentException {
+        addEvent(loginId, false, anonymousId, "track_signup", "$SignUp", null);
+    }
+
+    /**
+     * 记录用户注册事件
+     *
+     * 这个接口是一个较为复杂的功能，请在使用前先阅读相关说明
      * 并在必要时联系我们的技术支持人员。
      *
      * 属性取值可接受类型为{@link Number}, {@link String}, {@link Date}和{@link List}；
