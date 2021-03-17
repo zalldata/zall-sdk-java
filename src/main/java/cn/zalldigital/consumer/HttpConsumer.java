@@ -4,18 +4,23 @@ package cn.zalldigital.consumer;
 import cn.zalldigital.ZallDataAnalytics;
 import cn.zalldigital.exception.HttpConsumerException;
 import org.apache.commons.codec.binary.Base64;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.zip.GZIPOutputStream;
 
@@ -24,10 +29,18 @@ public class HttpConsumer implements Closeable {
     private CloseableHttpClient httpClient;
     private final String serverUrl;
     private final Map<String, String> httpHeaders;
+    private boolean gzipFlag = true;
 
     public HttpConsumer(String serverUrl, Map<String, String> httpHeaders) {
         this.serverUrl = serverUrl;
         this.httpHeaders = httpHeaders;
+        initHttpClient();
+    }
+
+    public HttpConsumer(String serverUrl, Map<String, String> httpHeaders, boolean gzipFlag) {
+        this.serverUrl = serverUrl;
+        this.httpHeaders = httpHeaders;
+        this.gzipFlag = gzipFlag;
         initHttpClient();
     }
 
@@ -79,15 +92,26 @@ public class HttpConsumer implements Closeable {
     StringEntity getHttpEntry(final String data) throws IOException {
         byte[] bytes = data.getBytes(StandardCharsets.UTF_8);
 
-        ByteArrayOutputStream os = new ByteArrayOutputStream(bytes.length);
-        GZIPOutputStream gos = new GZIPOutputStream(os);
-        gos.write(bytes);
-        gos.close();
+        List<NameValuePair> nameValuePairs = new ArrayList<>();
 
-        byte[] compressed = os.toByteArray();
-        os.close();
+        if (gzipFlag) {
+            ByteArrayOutputStream os = new ByteArrayOutputStream(bytes.length);
+            GZIPOutputStream gos = new GZIPOutputStream(os);
+            gos.write(bytes);
+            gos.close();
+            byte[] compressed = os.toByteArray();
+            os.close();
 
-        return  new StringEntity(new String(Base64.encodeBase64(compressed)));
+            nameValuePairs.add(new BasicNameValuePair("gzip", "1"));
+            nameValuePairs.add(new BasicNameValuePair("data_list", new String(Base64.encodeBase64
+                    (compressed))));
+        } else {
+            nameValuePairs.add(new BasicNameValuePair("gzip", "0"));
+            nameValuePairs.add(new BasicNameValuePair("data_list", new String(Base64.encodeBase64
+                    (bytes))));
+        }
+
+        return new UrlEncodedFormEntity(nameValuePairs);
     }
 
     @Override
