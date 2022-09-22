@@ -317,6 +317,7 @@ public class ZallDataAnalytics {
         if (properties != null && properties.containsKey("$distinctIdType")) {
             distinctIdType = (Integer) properties.get("$distinctIdType");
             event.put("distinctIdType", distinctIdType);
+            properties.remove("$distinctIdType");
         }
 
         this.consumer.send(event);
