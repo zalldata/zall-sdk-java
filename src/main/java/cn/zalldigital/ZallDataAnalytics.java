@@ -39,16 +39,16 @@ public class ZallDataAnalytics {
 
     /**
      * 设置每个事件都带有的一些公共属性
-     *
+     * <p>
      * 当track的Properties，superProperties和SDK自动生成的automaticProperties有相同的key时，遵循如下的优先级：
-     *    track.properties 高于 superProperties 高于 automaticProperties
-     *
+     * track.properties 高于 superProperties 高于 automaticProperties
+     * <p>
      * 另外，当这个接口被多次调用时，是用新传入的数据去merge先前的数据
-     *
+     * <p>
      * 例如，在调用接口前，dict是 {"a":1, "b": "bbb"}，传入的dict是 {"b": 123, "c": "asd"}，则merge后
      * 的结果是 {"a":1, "b": 123, "c": "asd"}
      *
-     * @param superPropertiesMap    一个或多个公共属性
+     * @param superPropertiesMap 一个或多个公共属性
      */
     public void registerSuperProperties(Map<String, Object> superPropertiesMap) {
         for (Map.Entry<String, Object> item : superPropertiesMap.entrySet()) {
@@ -62,11 +62,10 @@ public class ZallDataAnalytics {
      * 若属性包含 $time 字段，则它会覆盖事件的默认时间属性，该字段只接受{@link Date}类型；
      * 若属性包含 $project 字段，则它会指定事件导入的项目；
      *
-     * @param distinctId    用户 ID
-     * @param isLoginId     用户 ID 是否是登录 ID，false 表示该 ID 是一个匿名 ID
-     * @param eventName     事件名称
-     * @param properties    事件的属性
-     *
+     * @param distinctId 用户 ID
+     * @param isLoginId  用户 ID 是否是登录 ID，false 表示该 ID 是一个匿名 ID
+     * @param eventName  事件名称
+     * @param properties 事件的属性
      * @throws InvalidArgumentException eventName 或 properties 不符合命名规范和类型规范时抛出该异常
      */
     public void track(String distinctId, boolean isLoginId, String eventName,
@@ -77,13 +76,12 @@ public class ZallDataAnalytics {
 
     /**
      * 记录用户注册事件
-     *
+     * <p>
      * 这个接口是一个较为复杂的功能，请在使用前先阅读相关说明
      * 并在必要时联系我们的技术支持人员。
      *
-     * @param loginId       登录 ID
-     * @param anonymousId   匿名 ID
-     *
+     * @param loginId     登录 ID
+     * @param anonymousId 匿名 ID
      * @throws InvalidArgumentException eventName 或 properties 不符合命名规范和类型规范时抛出该异常
      */
     public void trackSignUp(String loginId, String anonymousId)
@@ -93,18 +91,17 @@ public class ZallDataAnalytics {
 
     /**
      * 记录用户注册事件
-     *
+     * <p>
      * 这个接口是一个较为复杂的功能，请在使用前先阅读相关说明
      * 并在必要时联系我们的技术支持人员。
-     *
+     * <p>
      * 属性取值可接受类型为{@link Number}, {@link String}, {@link Date}和{@link List}；
      * 若属性包含 $time 字段，它会覆盖事件的默认时间属性，该字段只接受{@link Date}类型；
      * 若属性包含 $project 字段，则它会指定事件导入的项目；
      *
-     * @param loginId       登录 ID
-     * @param anonymousId   匿名 ID
-     * @param properties    事件的属性
-     *
+     * @param loginId     登录 ID
+     * @param anonymousId 匿名 ID
+     * @param properties  事件的属性
      * @throws InvalidArgumentException eventName 或 properties 不符合命名规范和类型规范时抛出该异常
      */
     public void trackSignUp(String loginId, String anonymousId,
@@ -115,13 +112,12 @@ public class ZallDataAnalytics {
 
     /**
      * 设置用户的属性。属性取值可接受类型为{@link Number}, {@link String}, {@link Date}和{@link List}；
-     *
+     * <p>
      * 如果要设置的properties的key，之前在这个用户的profile中已经存在，则覆盖，否则，新创建
      *
-     * @param distinctId    用户 ID
-     * @param isLoginId     用户 ID 是否是登录 ID， false 表示该 ID 是一个匿名 ID
-     * @param properties    用户的属性
-     *
+     * @param distinctId 用户 ID
+     * @param isLoginId  用户 ID 是否是登录 ID， false 表示该 ID 是一个匿名 ID
+     * @param properties 用户的属性
      * @throws InvalidArgumentException eventName 或 properties 不符合命名规范和类型规范时抛出该异常
      */
     public void profileSet(String distinctId, boolean isLoginId,
@@ -133,15 +129,14 @@ public class ZallDataAnalytics {
     /**
      * 首次设置用户的属性。
      * 属性取值可接受类型为{@link Number}, {@link String}, {@link Date}和{@link List}；
-     *
+     * <p>
      * 与profileSet接口不同的是：
      * 如果要设置的properties的key，在这个用户的profile中已经存在，则不处理，否则，新创建
      *
-     * @param distinctId    用户 ID
-     * @param isLoginId     用户 ID 是否是登录 ID，false 表示该 ID 是一个匿名 ID
-     * @param properties    用户的属性
-     *
-     * @throws InvalidArgumentException     eventName 或 properties 不符合命名规范和类型规范时抛出该异常
+     * @param distinctId 用户 ID
+     * @param isLoginId  用户 ID 是否是登录 ID，false 表示该 ID 是一个匿名 ID
+     * @param properties 用户的属性
+     * @throws InvalidArgumentException eventName 或 properties 不符合命名规范和类型规范时抛出该异常
      */
     public void profileSetOnce(String distinctId, boolean isLoginId,
                                Map<String, Object> properties) throws InvalidArgumentException {
@@ -153,11 +148,10 @@ public class ZallDataAnalytics {
      * 为用户的一个或多个数值类型的属性累加一个数值，若该属性不存在，则创建它并设置默认值为0。属性取值只接受
      * {@link Number}类型
      *
-     * @param distinctId    用户 ID
-     * @param isLoginId     用户 ID 是否是登录 ID，false 表示该 ID 是一个匿名 ID
-     * @param properties    用户的属性
-     *
-     * @throws InvalidArgumentException     eventName 或 properties 不符合命名规范和类型规范时抛出该异常
+     * @param distinctId 用户 ID
+     * @param isLoginId  用户 ID 是否是登录 ID，false 表示该 ID 是一个匿名 ID
+     * @param properties 用户的属性
+     * @throws InvalidArgumentException eventName 或 properties 不符合命名规范和类型规范时抛出该异常
      */
     public void profileIncrement(String distinctId, boolean isLoginId,
                                  Map<String, Object> properties) throws InvalidArgumentException {
@@ -169,11 +163,10 @@ public class ZallDataAnalytics {
      * 为用户的一个或多个数组类型的属性追加字符串，属性取值类型必须为 {@link List}，且列表中元素的类型
      * 必须为 {@link String}
      *
-     * @param distinctId    用户 ID
-     * @param isLoginId     用户 ID 是否是登录 ID，false 表示该 ID 是一个匿名 ID
-     * @param properties    用户的属性
-     *
-     * @throws InvalidArgumentException     eventName 或 properties 不符合命名规范和类型规范时抛出该异常
+     * @param distinctId 用户 ID
+     * @param isLoginId  用户 ID 是否是登录 ID，false 表示该 ID 是一个匿名 ID
+     * @param properties 用户的属性
+     * @throws InvalidArgumentException eventName 或 properties 不符合命名规范和类型规范时抛出该异常
      */
     public void profileAppend(String distinctId, boolean isLoginId,
                               Map<String, Object> properties) throws InvalidArgumentException {
@@ -184,11 +177,10 @@ public class ZallDataAnalytics {
     /**
      * 删除用户某一个属性
      *
-     * @param distinctId    用户 ID
-     * @param isLoginId     用户 ID 是否是登录 ID，false 表示该 ID 是一个匿名 ID
-     * @param property      属性名称
-     *
-     * @throws InvalidArgumentException     eventName 或 properties 不符合命名规范和类型规范时抛出该异常
+     * @param distinctId 用户 ID
+     * @param isLoginId  用户 ID 是否是登录 ID，false 表示该 ID 是一个匿名 ID
+     * @param property   属性名称
+     * @throws InvalidArgumentException eventName 或 properties 不符合命名规范和类型规范时抛出该异常
      */
     public void profileUnset(String distinctId, boolean isLoginId, String property) throws InvalidArgumentException {
 
@@ -200,10 +192,9 @@ public class ZallDataAnalytics {
     /**
      * 删除用户所有属性
      *
-     * @param distinctId    用户 ID
-     * @param isLoginId     用户 ID 是否是登录 ID，false 表示该 ID 是一个匿名 ID
-     *
-     * @throws InvalidArgumentException     distinctId 不符合命名规范时抛出该异常
+     * @param distinctId 用户 ID
+     * @param isLoginId  用户 ID 是否是登录 ID，false 表示该 ID 是一个匿名 ID
+     * @throws InvalidArgumentException distinctId 不符合命名规范时抛出该异常
      */
     public void profileDelete(String distinctId, boolean isLoginId) throws InvalidArgumentException {
 
@@ -213,10 +204,10 @@ public class ZallDataAnalytics {
     /**
      * 设置 item
      *
-     * @param itemType      item 类型
-     * @param itemId        item ID
-     * @param properties    item 相关属性
-     * @throws InvalidArgumentException     取值不符合规范抛出该异常
+     * @param itemType   item 类型
+     * @param itemId     item ID
+     * @param properties item 相关属性
+     * @throws InvalidArgumentException 取值不符合规范抛出该异常
      */
     public void itemSet(String itemType, String itemId,
                         Map<String, Object> properties) throws InvalidArgumentException {
@@ -227,9 +218,9 @@ public class ZallDataAnalytics {
     /**
      * 删除 item
      *
-     * @param itemType      item 类型
-     * @param itemId        item ID
-     * @throws InvalidArgumentException     取值不符合规范抛出该异常
+     * @param itemType item 类型
+     * @param itemId   item ID
+     * @throws InvalidArgumentException 取值不符合规范抛出该异常
      */
     public void itemDelete(String itemType, String itemId) throws InvalidArgumentException {
 
@@ -321,6 +312,13 @@ public class ZallDataAnalytics {
             event.put("original_id", originDistinceId);
         }
 
+        //distinctIdType
+        Integer distinctIdType;
+        if (properties != null && properties.containsKey("$distinctIdType")) {
+            distinctIdType = (Integer) properties.get("$distinctIdType");
+            event.put("distinctIdType", distinctIdType);
+        }
+
         this.consumer.send(event);
     }
 
@@ -397,11 +395,13 @@ public class ZallDataAnalytics {
     }
 
     private void assertProperties(String eventType, Map<String, Object> properties) throws InvalidArgumentException {
-        if (null == properties) { return; }
+        if (null == properties) {
+            return;
+        }
 
         for (Map.Entry<String, Object> property : properties.entrySet()) {
             if ("$is_login_id".equals(property.getKey())) {
-                if (!(property.getValue() instanceof  Boolean)) {
+                if (!(property.getValue() instanceof Boolean)) {
                     throw new InvalidArgumentException("The property value of '$is_login_id' should be "
                             + "Boolean.");
                 }
@@ -424,8 +424,8 @@ public class ZallDataAnalytics {
 
             // List 类型的属性值，List 元素必须为 String 类型
             if (property.getValue() instanceof List<?>) {
-                for (final ListIterator<Object> it = ((List<Object>)property.getValue()).listIterator
-                        (); it.hasNext();) {
+                for (final ListIterator<Object> it = ((List<Object>) property.getValue()).listIterator
+                        (); it.hasNext(); ) {
                     Object element = it.next();
                     if (!(element instanceof String)) {
                         throw new InvalidArgumentException("The property '" + property.getKey() + "' should be a list of String.");
